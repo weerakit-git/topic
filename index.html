@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="index.js" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="col-12 text-center pt-5">Rock Scissors Paper</h1>
+
+    <div class="col-12 text-center pt-5">
+            <button id="selected_RK" class="btn btn-danger my_btn">rock</button>
+            <button id="selected_SC" class="btn btn-success my_btn">scissors</button>
+            <button id="selected_PP" class="btn btn-primary my_btn">paper</button>
+    </div>
+    
+    <div class="col-12 row pt-5">
+        <dic class="col-6 text-center">
+            <div id="player_RK"style="display:none;" >
+                <img src="/image/rock.png" alt="" srcset="" width="300px">
+            </div>
+            <div id="player_SC" style="display:none;">
+                <img src="/image/scissors.png" alt="" srcset="">
+            </div>
+            <div id="player_PP" style="display:none;">
+                <img src="/image/paper.png" alt="" srcset="">
+            </div>
+
+        </dic>
+        <dic class="col-6 text-center">
+            <div id="bot_RK" style="display:none;">
+                <img src="/image/rock.png" alt="" srcset="" width="300px">
+            </div>
+            <div id="bot_SC" style="display:none;">
+                <img src="/image/scissors.png" alt="" srcset="">
+            </div>
+            <div id="bot_PP" style="display:none;">
+                <img src="/image/paper.png" alt="" srcset="">
+            </div>
+        </dic>
+    </div>
+
+
+    <div class="col-12 text-center">
+            <div id="win" style="display:none;">
+                <img src="/image/download-1-removebg-preview.png" alt="">
+            </div>
+            <div id="loser" style="display:none;">
+                <img src="/image/download-2-removebg-preview.png" alt="">
+            </div>
+            <div id="draw" style="display:none;">
+                <img src="/image/face.jpg" alt="" width="300px">
+            </div>
+
+
+    </div>
+
+
+
+    <!-- <script src="index.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.slim.js" integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc=" crossorigin="anonymous"></script>
+
+
+</body>
+
+<script>
+
+    function bot_display( bot_value ){
+        $('div[id^=bot_]').css('display', 'none'); 
+        if( bot_value == 0 ){
+            $("#bot_RK").show();
+        }
+        // $('div[id^=bot_]').css('display', 'none'); 
+        if( bot_value == 1 ){
+            $("#bot_SC").show();
+        }
+        // $('div[id^=bot_]').css('display', 'none'); 
+        if( bot_value == 2 ){
+            $("#bot_PP").show();
+        }
+    }
+
+    function bot_random( selected_by_player ){
+        
+        console.log( "This is function random na : ", selected_by_player )
+
+        let random_value = Math.random();
+        let bot_value = Math.floor( random_value * 3 );
+
+        console.log("This is random value", bot_value);
+
+        bot_display( bot_value );
+
+        // 0 RK, 1 SC, 2 PP
+        let result = -1;
+
+        if( selected_by_player == 0 && bot_value == 1 ){
+            result = 1;
+        }
+        if( selected_by_player == 1 && bot_value == 2 ){
+            result = 1;
+        }
+        if( selected_by_player == 2 && bot_value == 0 ){
+            result = 1;
+        }
+        if( selected_by_player == bot_value ){
+            result = 0;
+        }
+
+        // -1 lose, 0 draw, 1 win
+
+        if( result == 1 ){
+            $("#win").show();
+            $("#loser").hide();
+            $("#draw").hide();
+        }
+        if( result == 0 ){
+            $("#win").hide();
+            $("#loser").hide();
+            $("#draw").show();
+            
+        }
+        if( result == -1 ){
+            $("#win").hide();
+            $("#loser").show();
+            $("#draw").hide();
+        }
+
+
+    }
+
+    $(document).ready( function(){
+        console.log("Script OK");
+        
+        $("#selected_RK").click(function(){
+            $("#player_RK").show();
+            $("#player_SC").hide();
+            $("#player_PP").hide();
+            bot_random( 0 );
+        });
+
+        $("#selected_SC").click(function(){
+            $('div[id^=player_]').css('display', 'none'); 
+            $("#player_SC").show();                
+            bot_random( 1 );
+        });
+
+        $("#selected_PP").click(function(){
+            $('div[id^=player_]').css('display', 'none'); 
+            $("#player_PP").show();
+            bot_random( 2 );
+        });
+
+    });
+    
+</script>
+
+</html>
